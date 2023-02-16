@@ -17,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/contacts', [App\Http\Controllers\Api\ContactController::class, 'index']);
+    Route::post('contacts', [App\Http\Controllers\Api\ContactController::class, 'store']);
+    Route::put('contacts/{contact}', [App\Http\Controllers\Api\ContactController::class, 'update']);
+    Route::delete('/contacts/{contact}', [App\Http\Controllers\Api\ContactController::class, 'destroy']);
+
+    Route::post('/create-token', function (Request $request) {
+        $token = $request->user()->createToken($request->token_name);
+        return ['token' => $token->plainTextToken];
+    });
+});

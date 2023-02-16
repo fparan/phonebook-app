@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Contacts') }}</div>
+                <div class="card-header">{{ __('Edit contact') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    @livewire('contacts.show')
+                    @livewire('contacts.edit', ['contactId' => $contactId])
                 </div>
             </div>
         </div>

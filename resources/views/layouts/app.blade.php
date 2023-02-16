@@ -15,6 +15,8 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    @livewireStyles
 </head>
 <body>
     <div id="app">
@@ -76,5 +78,13 @@
             @yield('content')
         </main>
     </div>
+
+    @livewireScripts
+
+    <script type="text/javascript">
+        window.livewire.on('deleteContact', () => {
+            $('#closeDeleteModal').click();
+        });
+    </script>
 </body>
 </html>
