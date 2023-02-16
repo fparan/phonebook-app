@@ -4,6 +4,9 @@
             <form wire:submit.prevent="save">
                 <div class="form-group mb-2">
                     <input type="file" class="form-control-file" wire:model="contactFile">
+                    @error('contactFile')
+                        <small class="form-text text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="form-group mb-2">

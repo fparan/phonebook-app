@@ -24,6 +24,14 @@ class Show extends Component
 
     public $selectedContact;
 
+    protected $rules = [
+        'contactFile' => 'mimes:csv,txt'
+    ];
+
+    protected $messages = [
+        'contactFile.mimes' => 'File should be of type csv.',
+    ];
+
     public function render()
     {
         if (! empty($this->search)) {
@@ -45,9 +53,7 @@ class Show extends Component
 
     public function save()
     {
-        $this->validate([
-            'contactFile' => 'mimes:csv,txt'
-        ]);
+        $this->validate();
 
         $csvContent = $this->getCsvFileContent();
         $contacts = $this->structureContent($csvContent);

@@ -99,7 +99,7 @@ class ContactController extends Controller
         $message = 'Successfully updated contact';
 
         try{
-            $contact = Contact::find($id);
+            $contact = Contact::findOrFail($id);
             $contact->title = $request->title;
             $contact->first_name = $request->first_name;
             $contact->last_name = $request->last_name;
