@@ -6,6 +6,8 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Contact;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class Show extends Component
 {
@@ -50,7 +52,9 @@ class Show extends Component
         $csvContent = $this->getCsvFileContent();
         $contacts = $this->structureContent($csvContent);
 
-        DB::transaction(function () use ($contacts) {
+        DB::beginTransaction();
+
+        try {
             foreach ($contacts as $contact) {
                 Contact::create([
                     $this->title => $contact['title'],
@@ -60,7 +64,12 @@ class Show extends Component
                     $this->company_name => $contact['company_name'],
                 ]);
             }
-        });
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Failed to add contact with CSV", ['message' => $e->getMessage()]);
+        }
     }
 
     public function delete($contactId)
